@@ -6,16 +6,9 @@
     --text-color: #212529;
     --text-muted: #6C757D;
     --accent-color: #007BFF;
+    --accent-color-alt-orange: #FF7411;
+    --accent-color-alt-red: #cd0909;
 }
-
-/* uncomment to enable dark mode */
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*      --bg-color: #121212;*/
-/*      --panel-color: #1E1E1E;*/
-/*      --text-color: #EAEAEA;*/
-/*  }*/
-/*}*/
 
 body {
   background: var(--bg-color);
