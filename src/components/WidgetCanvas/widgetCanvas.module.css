@@ -1,0 +1,7 @@
+.canvas {
+    position: relative;
+    width: 60%;
+    aspect-ratio: 16 / 9;
+    margin: 10px 0 0 10px;
+    outline: var(--text-color) 1px solid;
+}
