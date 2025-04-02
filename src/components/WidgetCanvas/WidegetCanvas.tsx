@@ -80,10 +80,8 @@ export default function WidgetCanvas({widgets}: WidgetCanvasProps) {
       <div className={styles.canvas} onDragOver={(event) => event.preventDefault()}>
         {
           widgets.map(({ type, props }, i) => {
-            const Widget = commonWidgets[type].component;
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            return <Widget key={i} {...props} />
+            const Widget = commonWidgets[type].component as React.FC<typeof props>;
+            return <Widget key={`${i}-${type}`} {...props} />
           })
         }
       </div>
