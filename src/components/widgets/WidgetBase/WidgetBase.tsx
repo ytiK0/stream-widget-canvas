@@ -10,7 +10,8 @@ import {WidgetBaseProps, WidgetPosition} from "@/types/widget";
 
 const DEFAULT_WIDGET_POSITION: WidgetPosition = {
   top: 0,
-  left: 0
+  left: 0,
+  width: 300
 }
 
 export function WidgetBaseView(props: ComponentProps<"div">) {
@@ -70,17 +71,19 @@ export function WidgetBase({children, position: initialPosition}: PropsWithChild
         return;
       }
 
-      const { clientX, clientY } = event;
+      const { clientX, clientY, target } = event;
       const dx = clientX - (prevPositionRef.current?.left || clientX);
       const dy = clientY - (prevPositionRef.current?.top || clientY);
 
       prevPositionRef.current = {
         top: event.clientY,
-        left: event.clientX
+        left: event.clientX,
+        width: initialPosition?.width || DEFAULT_WIDGET_POSITION.width
       }
       setPosition({
         top: position.top + dy >= 0 ? position.top + dy : 0,
-        left: position.left + dx >= 0 ? position.left + dx : 0
+        left: position.left + dx >= 0 ? position.left + dx : 0,
+        width: initialPosition?.width || DEFAULT_WIDGET_POSITION.width
       });
     }
 

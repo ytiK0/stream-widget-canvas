@@ -1,6 +1,6 @@
 import {FC} from "react";
 
-type WidgetPropType = "number" | "string";
+type WidgetPropType = "number" | "string" | "color";
 
 interface WidgetPropTypeMap {
   "number": number,
@@ -15,11 +15,13 @@ interface WidgetPropSchema {
 
 type WidgetPosition = {
   top: number,
-  left: number
+  left: number,
+  width: number
 }
 
 interface WidgetBaseProps {
   position?: WidgetPosition
+  key?: number | string
 }
 
 type WidgetProps<props> = WidgetBaseProps & props;
@@ -32,7 +34,9 @@ type WidgetPropsByType = {
 type WidgetType = keyof WidgetPropsByType;
 
 interface WidgetBase<T extends keyof WidgetPropsByType> {
-  type: `${T}`
+  id: string
+  name: string
+  type: T
 }
 
 interface TextWidget extends WidgetBase<"text"> {
@@ -49,5 +53,6 @@ type Widget = TextWidget | ImageWidget;
 
 type WidgetObject<P extends WidgetType> = {
   component: FC<WidgetProps<WidgetPropsByType[`${P}`]>>,
-  schema: WidgetPropSchema[]
+  schema: WidgetPropSchema[],
+  defaultProps: WidgetPropsByType[`${P}`]
 }

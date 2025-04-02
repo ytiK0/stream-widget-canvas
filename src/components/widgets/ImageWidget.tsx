@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {WidgetPropSchema, WidgetProps, WidgetObject} from "@/types/widget";
+import {WidgetPropSchema, WidgetProps, WidgetObject, WidgetPosition} from "@/types/widget";
 import {WidgetBase} from "@/components/widgets/WidgetBase/WidgetBase";
 
 
@@ -10,17 +10,28 @@ const imageWidgetPropsSchema: WidgetPropSchema[] = [
   }
 ];
 
+const DEFAULT_IMAGE_POSITION: WidgetPosition = {
+  top: 0,
+  left: 0,
+  width: 100
+}
+
 function ImageWidgetView({src}: WidgetProps<ImageWidgetProps>) {
+  const width = DEFAULT_IMAGE_POSITION.width
+
   return (
-    <WidgetBase>
-      <Image src={src} alt={"widget img"} width={100} height={100} draggable={false} />
+    <WidgetBase position={DEFAULT_IMAGE_POSITION}>
+      <Image src={src} alt={"widget img"} width={width} height={width} draggable={false} />
     </WidgetBase>
   );
 }
 
 const ImageWidget: WidgetObject<"image"> = {
   component: ImageWidgetView,
-  schema: imageWidgetPropsSchema
+  schema: imageWidgetPropsSchema,
+  defaultProps: {
+    src: "/photo.jpg"
+  }
 }
 
 export default ImageWidget;

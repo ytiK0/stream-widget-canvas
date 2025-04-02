@@ -1,30 +1,33 @@
 "use client";
 
 import { WidgetBase } from "@/components/widgets/WidgetBase/WidgetBase";
-import {useEffect, useState} from "react";
 import {WidgetPropSchema, WidgetProps, WidgetObject} from "@/types/widget";
 
-const textWidgetSchema: WidgetPropSchema[] = [];
+const textWidgetSchema: WidgetPropSchema[] = [
+  {
+    type: "string",
+    propName: "text",
+  },
+  {
+    type: "color",
+    propName: "color"
+  }
+];
 
-function TextWidgetView({ text: defaultText }: WidgetProps<TextWidgetProps>) {
-  const [text, setText] = useState(defaultText);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setText("AnotherText very very very very very very very long")
-    }, 3000)
-  }, []);
-
+function TextWidgetView({ text, color }: WidgetProps<TextWidgetProps>) {
   return (
     <WidgetBase>
-      <span>{text}</span>
+      <span style={{color}}>{text}</span>
     </WidgetBase>
   );
 }
 
 const TextWidget: WidgetObject<"text"> = {
   component: TextWidgetView,
-  schema: textWidgetSchema
+  schema: textWidgetSchema,
+  defaultProps: {
+    text: "Text widget!"
+  }
 }
 
 export default TextWidget;

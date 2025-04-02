@@ -1,5 +1,6 @@
 interface TextWidgetProps {
-  text: string
+  text: string,
+  color?: string
 }
 
 interface ImageWidgetProps {
