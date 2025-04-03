@@ -37,6 +37,7 @@ interface WidgetBase<T extends keyof WidgetPropsByType> {
   id: string
   name: string
   type: T
+  props: WidgetPropsByType<T>
 }
 
 interface TextWidget extends WidgetBase<"text"> {

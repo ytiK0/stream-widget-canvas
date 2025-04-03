@@ -5,6 +5,7 @@ import {useCallback, useReducer} from "react";
 import styles from "@/app/page.module.css";
 import {Widget} from "@/types/widget";
 import WidgetController from "@/components/WidgetsController/WidgetsController";
+import {DeleteWidgetPayload, UpdateWidgetPayload, WidgetReducerAction} from "@/types/reducer";
 
 
 
@@ -17,9 +18,11 @@ function widgetReducer(state: Widget[], action: WidgetReducerAction) {
         target.props = payload.newProps as typeof target.props;
       }
       return [...state];
-      break;
+    case "add_new":
+      return [...state, payload];
+    case "delete":
+      return [...state.filter(({id}) => id !== payload.id)];
   }
-  return state
 }
 
 export default function Home() {
@@ -28,14 +31,22 @@ export default function Home() {
     {type: "text", props: {text: "TEEEEEEEEEEEEEEEEEEEEEx"}, id: "seccocn", name: "text widget"}
   ]);
 
-  const updateWidget = useCallback((payload: UpdateWidgetAction["payload"]) => {
+  const updateWidget = useCallback((payload: UpdateWidgetPayload) => {
     dispatch({ type: "update_widget", payload })
+  }, []);
+
+  const addNew = useCallback((widget: Widget) => {
+    dispatch({type: "add_new", payload: widget})
+  }, []);
+
+  const remove = useCallback((payload: DeleteWidgetPayload) => {
+    dispatch({type: "delete", payload})
   }, [])
 
   return (
     <div className={styles.pageWrapper}>
       <WidgetCanvas widgets={widgets} />
-      <WidgetController widgets={widgets} update={updateWidget} />
+      <WidgetController widgets={widgets} update={updateWidget} addNew={addNew} remove={remove} />
     </div>
   );
 }
